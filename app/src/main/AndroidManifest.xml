@@ -50,7 +50,7 @@
         
         <provider
             android:authorities="@string/content_authority"
-            android:name=".CarParkContentProvider"
+            android:name=".data.CarParkContentProvider"
             android:exported="false"
             android:syncable="true" />
     </application>

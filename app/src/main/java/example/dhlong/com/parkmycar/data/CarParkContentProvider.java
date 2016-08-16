@@ -1,4 +1,4 @@
-package example.dhlong.com.parkmycar;
+package example.dhlong.com.parkmycar.data;
 
 import android.content.ContentValues;
 import android.content.Context;
