@@ -30,6 +30,7 @@ public class CarParkSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final int SYNC_INTERVAL = 60 * 180;
     private static final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
+    private static Context sContext;
 
     public CarParkSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -40,13 +41,17 @@ public class CarParkSyncAdapter extends AbstractThreadedSyncAdapter {
                               ContentProviderClient contentProviderClient,
                               SyncResult syncResult)
     {
+        if(sContext == null) return;
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://datamall2.mytransport.sg/ltaodataservice/")
+                .baseUrl(sContext.getString(R.string.datamall_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         CarParkAPI carParkAPI = retrofit.create(CarParkAPI.class);
-        Call<CarParkResponse> call = carParkAPI.loadCarParks("xvfeFFQxTcOS4OozxWTwYA==", "47d36256-bc7c-41c4-ad42-4f248c87b849");
+        Call<CarParkResponse> call = carParkAPI.loadCarParks(
+                sContext.getString(R.string.api_key),
+                sContext.getString(R.string.user_id));
         try {
             ContentValues[] cVArray = getContentValues(call.execute().body().value);
             if(cVArray.length > 0) {
@@ -193,5 +198,6 @@ public class CarParkSyncAdapter extends AbstractThreadedSyncAdapter {
     public static void initializeSyncAdapter(Context context) {
         Log.d(CarParkSyncAdapter.class.getSimpleName(), "initializeSyncAdapter");
         getSyncAccount(context);
+        CarParkSyncAdapter.sContext = context;
     }
 }
