@@ -8,42 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
-import com.tjeannin.provigen.ProviGenBaseContract;
 import com.tjeannin.provigen.ProviGenOpenHelper;
 import com.tjeannin.provigen.ProviGenProvider;
-import com.tjeannin.provigen.annotation.Column;
-import com.tjeannin.provigen.annotation.Column.Type;
-import com.tjeannin.provigen.annotation.ContentUri;
 import com.tjeannin.provigen.helper.TableBuilder;
 import com.tjeannin.provigen.model.Constraint;
 
-/**
- * Created by 9mat on 16/8/2016.
- */
-
-interface CarParkContract extends ProviGenBaseContract {
-    @Column(Type.TEXT)
-    String CARPARK_ID = "id";
-
-    @Column(Type.TEXT)
-    String AREA = "area";
-
-    @Column(Type.TEXT)
-    String LANDMARK = "landmark";
-
-    @Column(Type.REAL)
-    String LATITUDE = "latitude";
-
-    @Column(Type.REAL)
-    String LONGITUDE = "longitude";
-
-    @Column(Type.INTEGER)
-    String LOTS = "lots";
-
-    @ContentUri
-    Uri CONTENT_URI = Uri.parse("content://com.dhlong.parkmycar/carparks");
-    Uri CARPARK_ID_URI = CONTENT_URI.buildUpon().appendPath("carpark_id").build();
-}
+import example.dhlong.com.parkmycar.data.CarParkContract;
 
 
 public class CarParkContentProvider extends ProviGenProvider {
@@ -65,7 +35,7 @@ public class CarParkContentProvider extends ProviGenProvider {
 
     @Override
     public SQLiteOpenHelper openHelper(Context context) {
-        return new ProviGenOpenHelper(getContext(), "favorite_movies", null, DATABASE_VERSION, contracts){
+        return new ProviGenOpenHelper(getContext(), "carparks", null, DATABASE_VERSION, contracts){
             @Override
             public void onCreate(SQLiteDatabase database) {
                 new TableBuilder(CarParkContract.class)

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ParkMyCar</string>
+    <string name="content_authority">dhlong.parkmycar.app</string>
+    <string name="sync_account_type">parkmycar.dhlong</string>
 </resources>
